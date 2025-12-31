@@ -1,0 +1,47 @@
+# XGBoost configuration
+data:
+  n_samples: 500
+  n_genes: 100
+  n_subtypes: 3
+  subtypes: ["Luminal A", "HER2+", "Triple Negative"]
+  test_size: 0.2
+  val_size: 0.2
+  random_seed: 42
+
+model:
+  name: "xgboost"
+  params:
+    xgboost:
+      n_estimators: 200
+      max_depth: 8
+      learning_rate: 0.05
+      subsample: 0.8
+      colsample_bytree: 0.8
+      random_state: 42
+      eval_metric: "mlogloss"
+
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.001
+  early_stopping_patience: 10
+  save_best_model: true
+
+evaluation:
+  metrics: ["auroc", "auprc", "accuracy", "precision", "recall", "f1"]
+  calibration: true
+  explainability: true
+  cross_validation_folds: 5
+
+logging:
+  level: "INFO"
+  log_dir: "logs"
+  use_wandb: false
+  use_tensorboard: false
+
+device: "auto"
+
+output:
+  model_dir: "assets/models"
+  plot_dir: "assets/plots"
+  results_dir: "assets/results"
